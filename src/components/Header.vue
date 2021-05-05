@@ -1,6 +1,6 @@
 <template>
   <header class="text-center bg-green-800 text-white p-4 mb-10">
-    <div class="text-3xl md:text-5xl"><i class="fas fa-viruses"></i> Covid 19 Tracker</div>
+    <div class="text-3xl md:text-5xl"><i class="fas fa-viruses"></i> Covid 19 Tracker <i class="fas fa-viruses fa-flip-horizontal"></i></div>
     <p>API by <a class="text-green-300" href="https://corona.lmao.ninja/">disease.sh</a></p>
   </header>
 </template>
