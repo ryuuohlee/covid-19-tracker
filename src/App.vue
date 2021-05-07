@@ -1,12 +1,9 @@
 <template>
   <Header />
-  <div class>
     <div class="container">
       <Cards />
-      <!--<router-link to="/">Home</router-link> | -->
+      <router-view/>
     </div>
-  </div>
-  <!--<router-view/>-->
 </template>
 
 <script>
