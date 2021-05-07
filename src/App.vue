@@ -1,10 +1,12 @@
 <template>
   <Header />
-  <div class="container">
-    <Cards />
-    <!--<router-link to="/">Home</router-link> | -->
+  <div class>
+    <div class="container">
+      <Cards />
+      <!--<router-link to="/">Home</router-link> | -->
+    </div>
   </div>
-  <router-view/>
+  <!--<router-view/>-->
 </template>
 
 <script>
