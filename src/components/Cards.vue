@@ -4,10 +4,10 @@
     <div class="shadow-2xl border border-gray-150 bg-gray p-5 rounded">
       <h3>Infected</h3>
       <div>
-        count
+        {{ totalCases }}
       </div>
       <div>
-        date
+        {{ timestamp }}
       </div>
       <div>
         Number of active cases of COVID-19
@@ -17,10 +17,10 @@
     <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
       <h3>Recovered</h3>
       <div>
-        count
+        {{ totalRecovered }}
       </div>
       <div>
-        date
+        {{ timestamp }}
       </div>
       <div>
         Number of active cases of COVID-19
@@ -30,10 +30,10 @@
     <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
       <h3>Deaths</h3>
       <div>
-        count
+        {{ totalDeaths }}
       </div>
       <div>
-        date
+        {{ timestamp }}
       </div>
       <div>
         Number of active cases of COVID-19
@@ -45,7 +45,15 @@
 
 
 <script type="text/babel">
+import moment from 'moment'
+
 export default {
   name: 'Cards',
-  };
+  props: ['dataDate', 'totalCases', 'totalRecovered', 'totalDeaths'],
+  computed: {
+    timestamp: function() {
+      return moment(this.dataDate).format('MMMM Do YYYY')
+    }
+  }
+}
 </script>

@@ -1,6 +1,6 @@
 <template>
   <main v-if="!loading">
-    show
+    <Cards :dataDate="dataDate" :totalCases="totalCases" :totalRecovered="totalRecovered" :totalDeaths="totalDeaths" />
   </main>
 
   <main class="flex flex-col align-center justify-center" v-else>
@@ -13,11 +13,13 @@
 
 <script>
 // @ is an alias to /src
-
+import Cards from '../components/Cards'
 
 export default {
   name: 'Home',
-  components: {},
+  components: {
+    Cards,
+  },
   data() {
     return {
       loading: true,
@@ -43,7 +45,7 @@ export default {
     this.totalCases = data.cases
     this.totalRecovered = data.recovered
     this.totalDeaths = data.deaths
-    this.loading = true
+    this.loading = false
   }
 }
 </script>
