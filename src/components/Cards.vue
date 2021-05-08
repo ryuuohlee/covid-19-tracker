@@ -4,7 +4,7 @@
     <div class="shadow-2xl border border-gray-150 bg-gray p-5 rounded">
       <h3>Infected</h3>
       <div>
-        {{ totalCases }}
+        {{ cases }}
       </div>
       <div>
         {{ timestamp }}
@@ -23,7 +23,7 @@
         {{ timestamp }}
       </div>
       <div>
-        Number of active cases of COVID-19
+        Number of recovered cases of COVID-19
       </div>
     </div>
     <!-- Box 3 -->
@@ -36,7 +36,7 @@
         {{ timestamp }}
       </div>
       <div>
-        Number of active cases of COVID-19
+        Number of deaths of COVID-19
       </div>
     </div>
 
@@ -49,7 +49,7 @@ import moment from 'moment'
 
 export default {
   name: 'Cards',
-  props: ['dataDate', 'totalCases', 'totalRecovered', 'totalDeaths'],
+  props: ['dataDate', 'cases', 'totalRecovered', 'totalDeaths'],
   computed: {
     timestamp: function() {
       return moment(this.dataDate).format('MMMM Do YYYY')
