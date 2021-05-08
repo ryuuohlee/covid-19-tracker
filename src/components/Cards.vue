@@ -17,7 +17,7 @@
     <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
       <h3>Recovered</h3>
       <div>
-        {{ totalRecovered }}
+        {{ recovered }}
       </div>
       <div>
         {{ timestamp }}
@@ -30,7 +30,7 @@
     <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
       <h3>Deaths</h3>
       <div>
-        {{ totalDeaths }}
+        {{ deaths }}
       </div>
       <div>
         {{ timestamp }}
@@ -49,7 +49,7 @@ import moment from 'moment'
 
 export default {
   name: 'Cards',
-  props: ['dataDate', 'cases', 'totalRecovered', 'totalDeaths'],
+  props: ['dataDate', 'cases', 'recovered', 'deaths'],
   computed: {
     timestamp: function() {
       return moment(this.dataDate).format('MMMM Do YYYY')

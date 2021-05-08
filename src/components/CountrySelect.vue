@@ -21,8 +21,6 @@ export default {
     onChange() {
       const country = this.countries.find((item) => item === this.selected)
 
-      console.log(country)
-
       this.$emit('get-country', country)
     }
   }

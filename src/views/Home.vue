@@ -1,7 +1,7 @@
 <template>
   <main v-if="!loading">
-    {{ this.title}}
-    <Cards :dataDate="dataDate" :cases="cases" :totalRecovered="totalRecovered" :totalDeaths="totalDeaths" />
+    {{ this.title }}
+    <Cards :dataDate="dataDate" :cases="cases" :recovered="recovered" :deaths="deaths" />
     <CountrySelect @get-country="getCountryData" :countries=this.countries />
   </main>
 
@@ -46,27 +46,27 @@ export default {
       return data
     },
     getCountryData(country) {
-
       this.title = country
+
+      let index = this.countries.indexOf(country)
+
+      console.log(index)
+
+      this.cases = this.data[index].cases
+      console.log(this.cases)
     }
   },
   async created() {
     const data = await this.fetchCovidData()
     const reducer = (accum, curr) => accum + curr
 
+    this.data = data
     this.dataDate = data[0].updated
     this.countries = data.map(countries => countries.country)
-    this.cases = data.map(countries => countries.cases)
-    this.recovered = data.map(countries => countries.recovered)
-    this.deaths = data.map(countries => countries.deaths)
+    this.cases = data.map(countries => countries.cases).reduce(reducer)
+    this.recovered = data.map(countries => countries.recovered).reduce(reducer)
+    this.deaths = data.map(countries => countries.deaths).reduce(reducer)
     this.loading = false
-  },
-  filtered() {
-    if(title === 'Global') {
-      const reducer = (accum, curr) => accum + curr
-
-      this.cases = this.cases.reduce(reducer)
-    }
   }
 }
 </script>
