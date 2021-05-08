@@ -1,8 +1,17 @@
 <template>
   <main v-if="!loading">
-    {{ this.title }}
-    <Cards :dataDate="dataDate" :cases="cases" :recovered="recovered" :deaths="deaths" />
+    <div class="text-center">
+      <h2 class="text-3xl font-bold"> {{ this.title }} </h2>
+      <div class="text-xl mt-2 mb-10"> {{ timestamp }} </div>
+    </div>
+    <Cards :cases="cases" :recovered="recovered" :deaths="deaths" />
     <CountrySelect @get-country="getCountryData" :countries=this.countries />
+    <button
+      @click="clearCountryData"
+      v-if="this.title !== 'Global'"
+      class="bg-red-700 text-white rounded p-3 mt-10 focus:outline-none hover:bg-red-600">
+      Clear Country
+    </button>
   </main>
 
   <main class="flex flex-col align-center justify-center" v-else>
@@ -14,9 +23,9 @@
 </template>
 
 <script>
-// @ is an alias to /src
 import Cards from '../components/Cards'
 import CountrySelect from '../components/CountrySelect'
+import moment from 'moment'
 
 export default {
   name: 'Home',
@@ -24,12 +33,17 @@ export default {
     Cards,
     CountrySelect
   },
+  computed: {
+    timestamp: function() {
+      return moment(this.dataDate).format('MMMM Do YYYY, h:mm:ss a')
+    }
+  },
   data() {
     return {
       loading: true,
       loadingImage: require('../assets/Infinity-1s-200px.gif'),
       title: 'Global',
-      countries: 'All',
+      countries: '',
       dataDate: '',
       totalCases: '',
       totalRecovered: '',
@@ -38,8 +52,6 @@ export default {
   },
   methods:{
     async fetchCovidData(){
-      // let res;
-      // this.country === 'All' ? res = await fetch('https://corona.lmao.ninja/v3/covid-19/all') : res = await fetch('https://corona.lmao.ninja/v3/covid-19/countries')
       const res = await fetch('https://corona.lmao.ninja/v3/covid-19/countries')
       const data = await res.json()
 
@@ -50,10 +62,22 @@ export default {
 
       let index = this.countries.indexOf(country)
 
-      console.log(index)
-
       this.cases = this.data[index].cases
-      console.log(this.cases)
+      this.recovered = this.data[index].recovered
+      this.deaths = this.data[index].deaths
+    },
+    async clearCountryData() {
+      const reducer = (accum, curr) => accum + curr
+      this.loading = true
+      const data = await this.fetchCovidData()
+
+      this.title = 'Global'
+      this.dataDate = data[0].updated
+      this.countries = data.map(countries => countries.country)
+      this.cases = data.map(countries => countries.cases).reduce(reducer)
+      this.recovered = data.map(countries => countries.recovered).reduce(reducer)
+      this.deaths = data.map(countries => countries.deaths).reduce(reducer)
+      this.loading = false
     }
   },
   async created() {

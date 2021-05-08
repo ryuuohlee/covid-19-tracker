@@ -2,41 +2,32 @@
   <div class="grid md:grid-cols-3 gap-4">
     <!-- Box 1 -->
     <div class="shadow-2xl border border-gray-150 bg-gray p-5 rounded">
-      <h3>Infected</h3>
+      <h3 class="text-2xl text-green-800 font-bold mb-2">Infected</h3>
       <div>
-        {{ cases }}
+        {{ numberWithCommas(cases) }}
       </div>
-      <div>
-        {{ timestamp }}
-      </div>
-      <div>
-        Number of active cases of COVID-19
+      <div class="font-bold">
+        Number of active cases
       </div>
     </div>
     <!-- Box 2 -->
     <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
-      <h3>Recovered</h3>
+      <h3 class="text-2xl text-blue-800 font-bold mb-2">Recovered</h3>
       <div>
-        {{ recovered }}
+        {{ numberWithCommas(recovered) }}
       </div>
-      <div>
-        {{ timestamp }}
-      </div>
-      <div>
-        Number of recovered cases of COVID-19
+      <div class="font-bold">
+        Number of recovered cases
       </div>
     </div>
     <!-- Box 3 -->
     <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
-      <h3>Deaths</h3>
+      <h3 class="text-2xl text-red-800 font-bold mb-2">Deaths</h3>
       <div>
-        {{ deaths }}
+        {{ numberWithCommas(deaths) }}
       </div>
-      <div>
-        {{ timestamp }}
-      </div>
-      <div>
-        Number of deaths of COVID-19
+      <div class="font-bold">
+        Number of deaths
       </div>
     </div>
 
@@ -45,14 +36,18 @@
 
 
 <script type="text/babel">
-import moment from 'moment'
+
 
 export default {
   name: 'Cards',
   props: ['dataDate', 'cases', 'recovered', 'deaths'],
-  computed: {
-    timestamp: function() {
-      return moment(this.dataDate).format('MMMM Do YYYY')
+  methods: {
+    numberWithCommas(x) {
+        x = x.toString();
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(x))
+            x = x.replace(pattern, "$1,$2");
+        return x;
     }
   }
 }
