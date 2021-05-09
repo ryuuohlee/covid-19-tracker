@@ -14,7 +14,7 @@
         Clear Country
       </button>
     </div>
-    <div class="app_right mt-10 md:ml-4 md:mt-0 ">
+    <div class="app_right mt-10 mb-10 md:ml-4 md:mt-0 ">
       <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
     </div>
   </main>
