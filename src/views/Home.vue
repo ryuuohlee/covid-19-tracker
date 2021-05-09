@@ -1,17 +1,22 @@
 <template>
-  <main v-if="!loading">
-    <div class="text-center">
-      <h2 class="text-3xl font-bold"> {{ this.title }} </h2>
-      <div class="text-xl mt-2 mb-10"> {{ timestamp }} </div>
+  <main class="flex" v-if="!loading">
+    <div class="app_left">
+      <div class="text-center">
+        <h2 class="text-3xl font-bold"> {{ this.title }} </h2>
+        <div class="text-xl mt-2 mb-10"><span class="font-bold">Updated</span> {{ timestamp }} </div>
+      </div>
+      <Cards :cases="cases" :recovered="recovered" :deaths="deaths" />
+      <CountrySelect @get-country="getCountryData" :countries=this.countries />
+      <button
+        @click="clearCountryData"
+        v-if="this.title !== 'Global'"
+        class="bg-red-700 text-white rounded p-3 mt-10 focus:outline-none hover:bg-red-600">
+        Clear Country
+      </button>
     </div>
-    <Cards :cases="cases" :recovered="recovered" :deaths="deaths" />
-    <CountrySelect @get-country="getCountryData" :countries=this.countries />
-    <button
-      @click="clearCountryData"
-      v-if="this.title !== 'Global'"
-      class="bg-red-700 text-white rounded p-3 mt-10 focus:outline-none hover:bg-red-600">
-      Clear Country
-    </button>
+    <div class="app_right">
+
+    </div>
   </main>
 
   <main class="flex flex-col align-center justify-center" v-else>
