@@ -21,7 +21,7 @@
       </div>
     </div>
     <!-- Box 3 -->
-    <div class="shadow-xl border border-gray-200 bg-gray p-5 rounded">
+    <div class="shadow-2xl border border-gray-200 bg-gray p-5 rounded">
       <h3 class="text-2xl text-red-800 font-bold mb-2">Deaths</h3>
       <div>
         {{ numberWithCommas(deaths) }}

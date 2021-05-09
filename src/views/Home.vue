@@ -1,11 +1,14 @@
 <template>
   <main class="flex flex-col md:flex-row justify-evenly" v-if="!loading">
     <div class="app_left">
+      <!-- title and updated date -->
       <div class="text-center">
         <h2 class="text-3xl font-bold"> {{ this.title }} </h2>
         <div class="text-xl mt-2 mb-10"><span class="font-bold">Updated</span> {{ timestamp }} </div>
       </div>
+      <!-- info cards -->
       <Cards :infected="infected" :recovered="recovered" :deaths="deaths" />
+      <!-- country select dropdown and button -->
       <div class="flex">
         <CountrySelect @get-country="getCountryData" :countries="countries" :title="title"/>
         <button
@@ -16,11 +19,13 @@
         </button>
       </div>
     </div>
+    <!-- country select dropdown and button -->
     <div class="app_right mt-10 mb-10 md:ml-4 md:mt-0 ">
       <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
     </div>
   </main>
 
+  <!-- loading screen -->
   <main class="flex flex-col align-center justify-center" v-else>
     <div class="text-gray-500 text-3xl mt-10 mb-6">
       Fetching Data
