@@ -15,7 +15,7 @@
       </button>
     </div>
     <div class="app_right mt-10 md:ml-4 md:mt-0 ">
-      <CountriesTable :data="data" />
+      <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
     </div>
   </main>
 
@@ -91,7 +91,7 @@ export default {
     const data = await this.fetchCovidData()
     const reducer = (accum, curr) => accum + curr
 
-    this.data = data.sort((a,b) => b.cases-a.cases)
+    this.data = data
     this.dataDate = data[0].updated
     this.countries = data.map(countries => countries.country)
     this.infected = data.map(countries => countries.cases).reduce(reducer)
