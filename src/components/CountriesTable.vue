@@ -7,7 +7,11 @@
             <th class="w-1/3 text-left">Countries</th>
             <th class="text-right">Infected Cases</th>
           </tr>
-          <tr v-for="(country, index) in data" :value="country" :key="country" :style="index%2===0 ? {'background-color': 'rgb(211,211,211)'} : {'background-color': 'white'}">
+          <tr
+            v-for="(country, index) in data"
+            :value="country"
+            :key="country"
+            :style="index%2===0 ? {'background-color': 'rgb(211,211,211)'} : {'background-color': 'white'}">
             <td>{{ country.country }} </td>
             <td class="text-right font-bold">{{ numberWithCommas(country.cases) }} </td>
           </tr>

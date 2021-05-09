@@ -6,13 +6,15 @@
         <div class="text-xl mt-2 mb-10"><span class="font-bold">Updated</span> {{ timestamp }} </div>
       </div>
       <Cards :infected="infected" :recovered="recovered" :deaths="deaths" />
-      <CountrySelect @get-country="getCountryData" :countries="this.countries" />
-      <button
-        @click="clearCountryData"
-        v-if="this.title !== 'Global'"
-        class="bg-red-700 text-white rounded p-3 mt-10 focus:outline-none hover:bg-red-600">
-        Clear Country
-      </button>
+      <div class="flex">
+        <CountrySelect @get-country="getCountryData" :countries="countries" :title="title"/>
+        <button
+          @click="clearCountryData"
+          v-if="this.title !== 'Global'"
+          class="bg-red-700 text-white rounded p-3 mt-10 ml-4 focus:outline-none hover:bg-red-600">
+          Clear Country
+        </button>
+      </div>
     </div>
     <div class="app_right mt-10 mb-10 md:ml-4 md:mt-0 ">
       <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
