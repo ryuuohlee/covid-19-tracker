@@ -1,0 +1,34 @@
+<template>
+  <div class="shadow-xl border border-gray-150 bg-gray p-5 rounded">
+      <h3 class="text-xl font-bold mb-2">Live Infected Cases by Country</h3>
+      <div class=".countries_table overflow-y-auto" style="height: 600px;">
+        <table class="table-fixed">
+          <tr>
+            <th class="w-1/3 text-left">Countries</th>
+            <th class="text-right">Infected Cases</th>
+          </tr>
+          <tr v-for="country in data" :value="country" :key="country">
+            <td>{{ country.country }} </td>
+            <td class="text-right font-bold">{{ numberWithCommas(country.cases) }} </td>
+          </tr>
+        </table>
+
+      </div>
+    </div>
+</template>
+
+<script>
+export default {
+  name: 'CountriesTable',
+  props: ['data'],
+  methods: {
+    numberWithCommas(x) {
+        x = x.toString();
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(x))
+            x = x.replace(pattern, "$1,$2");
+        return x;
+    }
+  }
+}
+</script>
