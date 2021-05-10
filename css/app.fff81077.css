@@ -1,4 +1,4 @@
-.grid path,.yA .tick line,.yA path{stroke:transparent}
+.grid path,.yA .tick line,.yA path{stroke:transparent}text{font-size:x-large}path.line{fill:none;stroke:#006400;stroke-width:20px}.grid line{opacity:.05}.xA line{opacity:.5}svg .lineChart>path{stroke:#006400;stroke-width:3;stroke-dasharray:4813.713;stroke-dashoffset:4813.713;-webkit-animation-name:draw2;animation-name:draw2;-webkit-animation-duration:10s;animation-duration:10s;-webkit-animation-fill-mode:forwards;animation-fill-mode:forwards;-webkit-animation-iteration-count:1;animation-iteration-count:1;-webkit-animation-timing-function:linear;animation-timing-function:linear}.ani2 svg .lineChart>path{stroke:#006400;-webkit-animation-name:draw-2;animation-name:draw-2}.ani1 svg .lineChart>path{stroke:#006400;-webkit-animation-name:draw;animation-name:draw}#Layer_1{width:100%}@-webkit-keyframes draw{to{stroke-dashoffset:0}}@keyframes draw{to{stroke-dashoffset:0}}@-webkit-keyframes draw-2{to{stroke-dashoffset:0}}@keyframes draw-2{to{stroke-dashoffset:0}}.text{display:inline-block;font-size:3vw;margin:.5vw 0 1.5vw}
 
 /*! tailwindcss v2.1.2 | MIT License | https://tailwindcss.com */
 
