@@ -21,7 +21,11 @@
     </div>
     <!-- country select dropdown and button -->
     <div class="app_right mt-10 mb-10 md:ml-4 md:mt-0 ">
-      <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
+      <div class="shadow-xl border border-gray-150 bg-gray p-5 rounded">
+        <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
+        <h3 class="text-xl font-bold mt-4 mb-2">Global chart</h3>
+        <GlobalLineChart />
+      </div>
     </div>
   </main>
 
@@ -38,6 +42,7 @@
 import Cards from '../components/Cards'
 import CountrySelect from '../components/CountrySelect'
 import CountriesTable from '../components/CountriesTable'
+import GlobalLineChart from '../components/CountriesLineChart'
 import moment from 'moment'
 
 export default {
@@ -45,7 +50,8 @@ export default {
   components: {
     Cards,
     CountrySelect,
-    CountriesTable
+    CountriesTable,
+    GlobalLineChart
   },
   computed: {
     timestamp: function() {
