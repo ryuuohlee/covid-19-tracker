@@ -20,7 +20,7 @@
       </div>
     </div>
     <!-- country select dropdown and button -->
-    <div class="app_right mt-10 mb-10 md:ml-4 md:mt-0 ">
+    <div class="app_right h-auto mt-10 mb-10 md:ml-4 md:mt-0 ">
       <div class="shadow-xl border border-gray-150 bg-gray p-5 rounded">
         <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
         <h3 class="text-xl font-bold mt-4 mb-2">Global chart</h3>

@@ -1,7 +1,7 @@
 <template>
-  <div >
+  <div>
       <h3 class="text-xl font-bold mb-2">Live Infected Cases by Country</h3>
-      <div class=".countries_table overflow-y-auto" style="height: 600px;">
+      <div class="overflow-y-auto" style="height: 600px;">
         <table class="table-fixed">
           <tr>
             <th class="w-1/3 text-left">Countries</th>

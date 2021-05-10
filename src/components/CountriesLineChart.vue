@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <svg width="100%" height="100%" viewBox="0 0 800 330"
+  <div class="h-full">
+    <svg class="h-1/2" width="100%" height="100%" viewBox="0 0 800 900"
       preserveAspectRatio="xMidYMid meet" >
 
         <g class='lineChart' v-bind:transform="translate">
@@ -28,58 +28,34 @@ export default {
       data: [
         {
           day: "01-11-2016",
-          count: 80
+          count: 10495075
         },
         {
           day: "02-12-2016",
-          count: 250
+          count: 10659914
         },
         {
           day: "03-13-2016",
-          count: 150
+          count: 11008064
         },
         {
           day: "04-14-2016",
-          count: 496
+          count: 11144288
         },
         {
           day: "05-15-2016",
-          count: 140
+          count: 11307233
         },
         {
           day: "06-16-2016",
-          count: 380
-        },
-        {
-          day: "07-17-2016",
-          count: 140
-        },
-        {
-          day: "08-17-2016",
-          count: 240
-        },
-        {
-          day: "09-18-2016",
-          count: 100
-        },
-        {
-          day: "10-18-2016",
-          count: 260
-        },
-        {
-          day: "11-18-2016",
-          count: 100
-        },
-        {
-          day: "12-18-2016",
-          count: 150
+          count: 11471155
         }
       ],
       chartDefaults: {
         width: 800,
-        height: 300,
+        height: 900,
         chartId: "linechart-vue",
-        title: "UK Rainfall for 2018",
+        title: "Global COVID-19 Chart",
         margin: {
           top: 5,
           right: 5,
