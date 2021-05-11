@@ -24,11 +24,6 @@
 export default {
   name: 'CountriesTable',
   props: ['data'],
-  // data() {
-  //   return {
-  //     selected: 0
-  //   }
-  // },
   methods: {
     numberWithCommas(x) {
         x = x.toString();
@@ -36,13 +31,7 @@ export default {
         while (pattern.test(x))
             x = x.replace(pattern, "$1,$2");
         return x;
-    },
-  // for future dynamic chart
-  // onSelect() {
-  //     const country = this.countries.find((item) => item === this.selected)
-
-  //     this.$emit('get-country', country)
-  //   }
+    }
   }
 }
 </script>

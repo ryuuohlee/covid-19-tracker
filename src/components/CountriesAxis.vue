@@ -25,7 +25,6 @@ export default {
   mounted() {
     let node = this.$refs.axis;
 
-    //
     d3.select(node).call(this.scales);
   }
 }

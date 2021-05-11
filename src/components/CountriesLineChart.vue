@@ -1,6 +1,7 @@
 <template>
   <div class="h-full">
-    <svg class="h-1/2" width="100%" height="100%" viewBox="0 0 800 900"
+
+    <svg class="h-1/2" width="100%" height="100%" viewBox="0 0 830 930"
       preserveAspectRatio="xMidYMid meet" >
 
         <g class='lineChart' v-bind:transform="translate">
@@ -17,40 +18,15 @@
 <script>
 import * as d3 from "d3"
 import CountriesAxis from './CountriesAxis'
-
 export default {
   name: 'CountriesLineChart',
+  props: ['globalCases'],
   components: {
     axis: CountriesAxis
   },
   data() {
     return {
-      data: [
-        {
-          day: "01-11-2016",
-          count: 10495075
-        },
-        {
-          day: "02-12-2016",
-          count: 10659914
-        },
-        {
-          day: "03-13-2016",
-          count: 11008064
-        },
-        {
-          day: "04-14-2016",
-          count: 11144288
-        },
-        {
-          day: "05-15-2016",
-          count: 11307233
-        },
-        {
-          day: "06-16-2016",
-          count: 11471155
-        }
-      ],
+      data: this.globalCases,
       chartDefaults: {
         width: 800,
         height: 900,
@@ -82,11 +58,9 @@ export default {
     getScales() {
       // All the maths to work chart co ordinates and woring out Axis
       var parseDate = d3.timeParse("%m-%d-%Y");
-
       this.data.forEach(function(d) {
         d.date = parseDate(d.day);
       });
-
       const x = d3
         .scaleTime()
         .domain(
@@ -106,7 +80,6 @@ export default {
         .range([this.chartDefaults.height, 0]);
       d3.axisBottom().scale(x);
       d3.axisLeft().scale(y);
-
       //Key funtions to draw X-axis,YAxis and the grid. All uses component axis
       //play around with time format to get it to display as you want : d3.timeFormat("%b-%d")
       var xAxis = d3
@@ -124,7 +97,6 @@ export default {
             .splice(1)
         )
         .ticks(4);
-
       var yAxis = d3
         .axisLeft()
         .scale(y)
@@ -161,10 +133,91 @@ export default {
           return scale.y(d.count);
         })
         .curve(d3.curveCardinal);
-
       // draw line then this.line is injected into the template
       this.line = path(this.data);
     }
   }
 }
 </script>
+
+<style>
+path.line {
+  fill: none;
+  stroke: #ecbc3a;
+  stroke-width: 3px;
+}
+
+.grid line {
+  opacity: 0.05;
+}
+.xA line {
+  opacity: 0.5;
+}
+
+/*Some fancy animation to draw chart*/
+svg .lineChart > path {
+  stroke: #ecbc3a;
+  stroke-width: 3;
+  stroke-dasharray: 4813.713;
+  stroke-dashoffset: 4813.713;
+  -webkit-animation-name: draw2;
+  animation-name: draw2;
+  -webkit-animation-duration: 10s;
+  animation-duration: 10s;
+  -webkit-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+}
+
+.ani2 svg .lineChart > path {
+  stroke: #ecbc3a;
+  -webkit-animation-name: draw-2;
+  animation-name: draw-2;
+}
+.ani1 svg .lineChart > path {
+  stroke: #ecbc3a;
+  -webkit-animation-name: draw;
+  animation-name: draw;
+}
+#Layer_1 {
+  width: 100%;
+}
+@-webkit-keyframes draw {
+  85% {
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes draw {
+  85% {
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@-webkit-keyframes draw-2 {
+  85% {
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes draw-2 {
+  85% {
+  }
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+.text {
+  display: inline-block;
+  font-size: 3vw;
+  margin: 0.5vw 0 1.5vw;
+}
+</style>
