@@ -16,8 +16,9 @@ export default defineComponent({
     }
   },
   mounted () {
-    const dates = this.dates;
-    const totals = this.counts;
+    const dates = Object.keys(this.chartData.cases);
+    const totals = Object.values(this.chartData.cases);
+
 
     this.renderChart({
       labels: dates,

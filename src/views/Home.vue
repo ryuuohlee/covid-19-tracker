@@ -22,10 +22,9 @@
     <!-- country select dropdown and button -->
     <div class="app_right h-auto mt-10 mb-10 md:ml-4 md:mt-0 ">
       <div class="shadow-xl border border-gray-150 bg-gray p-5 rounded">
-        <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
-        <h3 class="text-xl font-bold mt-4 mb-2">Global chart</h3>
-        <!--<CountriesLineChart :globalCases="globalCases" />-->
-        <GlobalLineChart v-bind:dates="dates" v-bind:counts="counts" :options="chartOptions" />
+        <CountriesTable :data="sortedData" />
+        <h3 class="text-xl font-bold mt-4 mb-2">Global Infected Chart</h3>
+        <GlobalLineChart v-bind:chartData="data2" :options="chartOptions" :label="'Infected'" />
       </div>
     </div>
   </main>
@@ -64,15 +63,14 @@ export default {
     return {
       loading: true,
       loadingImage: require('../assets/Infinity-1s-200px.gif'),
+      data: '',
       title: 'Global',
       countries: '',
       dataDate: '',
       totalCases: '',
       totalRecovered: '',
       totalDeaths: '',
-      globalCases: [],
-      dates: [],
-      counts: [],
+      sortedData: '',
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
@@ -92,6 +90,12 @@ export default {
 
       return data2;
     },
+    async fetchGlobalCovid(){
+      const res = await fetch('https://api.covid19api.com/world/total');
+      const data3 = await res.json();
+
+      return data3;
+    },
     getCountryData(country) {
       this.title = country;
 
@@ -105,7 +109,6 @@ export default {
       const reducer = (accum, curr) => accum + curr;
       this.loading = true;
       const data1 = await this.fetchCovidData();
-      const data2 = await this.fetchGlobalCovidData();
 
       this.title = 'Global';
       this.dataDate = data1[0].updated;
@@ -115,46 +118,28 @@ export default {
       this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
       this.loading = false;
 
-      this.dates = Object.keys(data2.cases);
-      this.counts = Object.values(data2.cases);
-
-      for(let i = 0; i < data2.cases.length; i++) {
-        this.globalCases.push({
-          dates: this.dates[i],
-          counts: this.counts[i]
-        });
-      }
       }
     },
     async created() {
+      const data = await this.fetchCovidData();
       const data1 = await this.fetchCovidData();
       const data2 = await this.fetchGlobalCovidData();
+      const data3 = await this.fetchGlobalCovid();
       const reducer = (accum, curr) => accum + curr;
 
+      console.log(data3)
+
       this.data = data1;
+      this.sortedData = data.sort((a,b) => b.cases-a.cases);
       this.dataDate = data1[0].updated;
       this.countries = data1.map(countries => countries.country);
       this.infected = data1.map(countries => countries.cases).reduce(reducer);
       this.recovered = data1.map(countries => countries.recovered).reduce(reducer);
       this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
 
-      this.dates = Object.keys(data2.cases);
-      this.counts = Object.values(data2.cases);
+      this.data2 = data2;
 
-      // function createChartData(dates, counts) {
-      //   let chartData = [];
-      //   for(let i = 0; i  < dates.length; i++) {
-      //     chartData.push({
-      //       date: dates[i],
-      //       count: counts[i]
-      //     });
-      //   }
-      //   return chartData;
-      // }
-
-      // this.globalCases = createChartData(this.dates, this.counts);
       this.loading = false;
-
 
     }
 }
