@@ -24,7 +24,8 @@
       <div class="shadow-xl border border-gray-150 bg-gray p-5 rounded">
         <CountriesTable :data="data.sort((a,b) => b.cases-a.cases)" />
         <h3 class="text-xl font-bold mt-4 mb-2">Global chart</h3>
-        <CountriesLineChart :globalCases="globalCases" />
+        <!--<CountriesLineChart :globalCases="globalCases" />-->
+        <GlobalLineChart v-bind:dates="dates" v-bind:counts="counts" :options="chartOptions" />
       </div>
     </div>
   </main>
@@ -39,11 +40,11 @@
 </template>
 
 <script>
-import Cards from '../components/Cards'
-import CountrySelect from '../components/CountrySelect'
-import CountriesTable from '../components/CountriesTable'
-import CountriesLineChart from '../components/CountriesLineChart'
-import moment from 'moment'
+import Cards from '../components/Cards';
+import CountrySelect from '../components/CountrySelect';
+import CountriesTable from '../components/CountriesTable';
+import moment from 'moment';
+import GlobalLineChart from '../components/GlobalLineChart.vue';
 
 export default {
   name: 'Home',
@@ -51,11 +52,12 @@ export default {
     Cards,
     CountrySelect,
     CountriesTable,
-    CountriesLineChart
+    GlobalLineChart,
+    //CountriesLineChart
   },
   computed: {
     timestamp: function() {
-      return moment(this.dataDate).format('MMMM Do YYYY, h:mm:ss a')
+      return moment(this.dataDate).format('MMMM Do YYYY, h:mm:ss a');
     }
   },
   data() {
@@ -70,84 +72,88 @@ export default {
       totalDeaths: '',
       globalCases: [],
       dates: [],
-      counts: []
-    }
+      counts: [],
+      chartOptions: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
+    };
   },
   methods:{
     async fetchCovidData(){
-      const res = await fetch('https://corona.lmao.ninja/v3/covid-19/countries')
-      const data1 = await res.json()
+      const res = await fetch('https://corona.lmao.ninja/v3/covid-19/countries');
+      const data1 = await res.json();
 
-      return data1
+      return data1;
     },
     async fetchGlobalCovidData(){
-      const res = await fetch('https://corona.lmao.ninja/v3/covid-19/historical/all?lastdays=90')
-      const data2 = await res.json()
+      const res = await fetch('https://corona.lmao.ninja/v3/covid-19/historical/all?lastdays=90');
+      const data2 = await res.json();
 
-      return data2
+      return data2;
     },
     getCountryData(country) {
-      this.title = country
+      this.title = country;
 
-      let index = this.countries.indexOf(country)
+      let index = this.countries.indexOf(country);
 
-      this.infected = this.data[index].cases
-      this.recovered = this.data[index].recovered
-      this.deaths = this.data[index].deaths
+      this.infected = this.data[index].cases;
+      this.recovered = this.data[index].recovered;
+      this.deaths = this.data[index].deaths;
     },
     async clearCountryData() {
-      const reducer = (accum, curr) => accum + curr
-      this.loading = true
-      const data1 = await this.fetchCovidData()
-      const data2 = await this.fetchGlobalCovidData()
+      const reducer = (accum, curr) => accum + curr;
+      this.loading = true;
+      const data1 = await this.fetchCovidData();
+      const data2 = await this.fetchGlobalCovidData();
 
-      this.title = 'Global'
-      this.dataDate = data1[0].updated
-      this.countries = data1.map(countries => countries.country)
-      this.infected = data1.map(countries => countries.cases).reduce(reducer)
-      this.recovered = data1.map(countries => countries.recovered).reduce(reducer)
-      this.deaths = data1.map(countries => countries.deaths).reduce(reducer)
-      this.loading = false
+      this.title = 'Global';
+      this.dataDate = data1[0].updated;
+      this.countries = data1.map(countries => countries.country);
+      this.infected = data1.map(countries => countries.cases).reduce(reducer);
+      this.recovered = data1.map(countries => countries.recovered).reduce(reducer);
+      this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
+      this.loading = false;
 
-      this.dates = Object.keys(data2.cases)
-      this.counts = Object.values(data2.cases)
+      this.dates = Object.keys(data2.cases);
+      this.counts = Object.values(data2.cases);
 
       for(let i = 0; i < data2.cases.length; i++) {
         this.globalCases.push({
           dates: this.dates[i],
           counts: this.counts[i]
-        })
+        });
       }
       }
     },
     async created() {
-      const data1 = await this.fetchCovidData()
-      const data2 = await this.fetchGlobalCovidData()
-      const reducer = (accum, curr) => accum + curr
+      const data1 = await this.fetchCovidData();
+      const data2 = await this.fetchGlobalCovidData();
+      const reducer = (accum, curr) => accum + curr;
 
-      this.data = data1
-      this.dataDate = data1[0].updated
-      this.countries = data1.map(countries => countries.country)
-      this.infected = data1.map(countries => countries.cases).reduce(reducer)
-      this.recovered = data1.map(countries => countries.recovered).reduce(reducer)
-      this.deaths = data1.map(countries => countries.deaths).reduce(reducer)
+      this.data = data1;
+      this.dataDate = data1[0].updated;
+      this.countries = data1.map(countries => countries.country);
+      this.infected = data1.map(countries => countries.cases).reduce(reducer);
+      this.recovered = data1.map(countries => countries.recovered).reduce(reducer);
+      this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
 
-      this.dates = Object.keys(data2.cases)
-      this.counts = Object.values(data2.cases)
+      this.dates = Object.keys(data2.cases);
+      this.counts = Object.values(data2.cases);
 
-      function createChartData(dates, counts) {
-        let chartData = []
-        for(let i = 0; i  < dates.length; i++) {
-          chartData.push({
-            date: dates[i],
-            count: counts[i]
-          })
-        }
-        return chartData
-      }
+      // function createChartData(dates, counts) {
+      //   let chartData = [];
+      //   for(let i = 0; i  < dates.length; i++) {
+      //     chartData.push({
+      //       date: dates[i],
+      //       count: counts[i]
+      //     });
+      //   }
+      //   return chartData;
+      // }
 
-      this.globalCases = createChartData(this.dates, this.counts)
-      this.loading = false
+      // this.globalCases = createChartData(this.dates, this.counts);
+      this.loading = false;
 
 
     }

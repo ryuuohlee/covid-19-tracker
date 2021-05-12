@@ -10,17 +10,17 @@
     "gh-pages": "vue-cli-service gh-pages"
   },
   "dependencies": {
-    "@tailwindcss/postcss7-compat": "^2.0.2",
-    "autoprefixer": "^9",
+    "autoprefixer": "^9.8.6",
+    "chart.js": "^3.2.1",
     "core-js": "^3.6.5",
     "countup": "^1.8.2",
     "d3": "^6.7.0",
     "moment": "^2.29.1",
-    "postcss": "^7",
-    "simplebar-vue": "^1.6.3",
-    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.1.2",
     "vue": "^3.0.0",
-    "vue-router": "^4.0.0-0"
+    "vue-router": "^4.0.0-0",
+    "vue3-chart-v2": "^0.8.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
