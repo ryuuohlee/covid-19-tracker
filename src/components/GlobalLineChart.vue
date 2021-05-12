@@ -16,15 +16,24 @@ export default defineComponent({
     }
   },
   mounted () {
-    const dates = Object.keys(this.chartData.cases);
+    let previousDayData;
+    let newCases = [];
     const totals = Object.values(this.chartData.cases);
 
+    //create data for newCases only
+    for(let date in this.chartData.cases) {
+      if(previousDayData){
+        let newData = this.chartData.cases[date] - previousDayData;
+        newCases.push(newData);
+      }
+      previousDayData = this.chartData.cases[date]
+    }
 
     this.renderChart({
-      labels: dates,
+      labels: Object.keys(this.chartData.cases),
       datasets: [{
         label: this.label,
-        data: totals
+        data: newCases
       }]
     },
     this.options)
