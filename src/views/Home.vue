@@ -20,7 +20,7 @@
       </div>
       <div>
         <div class="shadow-xl border border-gray-150 bg-gray p-5 mt-5 rounded">
-          <GlobalMap :countries="data" />
+          <GlobalMap :countries="data" :countryLoc="countryLoc" :center="center" />
         </div>
       </div>
     </div>
@@ -72,11 +72,10 @@ export default {
       loadingImage: require('../assets/Infinity-1s-200px.gif'),
       data: '',
       title: 'Global',
+      center: [47.41322, -1.219482],
       countries: '',
+      countryLoc: '',
       dataDate: '',
-      // totalCases: '',
-      // totalRecovered: '',
-      // totalDeaths: '',
       sortedData: '',
       chartOptions: {
         legend: {
@@ -143,6 +142,7 @@ export default {
 
       let index = this.countries.indexOf(country);
 
+      this.center= this.countryLoc[index].countryLoc;
       this.infected = this.data[index].cases;
       this.recovered = this.data[index].recovered;
       this.deaths = this.data[index].deaths;
@@ -172,6 +172,10 @@ export default {
       this.sortedData = data.sort((a,b) => b.cases-a.cases);
       this.dataDate = data1[0].updated;
       this.countries = data1.map(countries => countries.country);
+      this.countryLoc = data1.map(countries => new Object({
+        country: countries.country,
+        countryLoc: [countries.countryInfo.lat, countries.countryInfo.long]
+      }));
       this.infected = data1.map(countries => countries.cases).reduce(reducer);
       this.recovered = data1.map(countries => countries.recovered).reduce(reducer);
       this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
@@ -179,7 +183,6 @@ export default {
       this.data2 = data2;
 
       this.loading = false;
-
     }
 }
 </script>
