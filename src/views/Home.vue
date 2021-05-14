@@ -18,6 +18,11 @@
           Clear Country
         </button>
       </div>
+      <div>
+        <div class="shadow-xl border border-gray-150 bg-gray p-5 mt-5 rounded">
+          <GlobalMap :countries="data" />
+        </div>
+      </div>
     </div>
     <!-- country select dropdown and button -->
     <div class="app_right h-auto mt-10 mb-10 md:ml-4 md:mt-0 ">
@@ -31,7 +36,7 @@
 
   <!-- loading screen -->
   <main class="flex flex-col align-center justify-center" v-else>
-    <div class="text-gray-500 text-3xl mt-10 mb-6">
+    <div class="text-gray-500 text-3xl text-center mt-10 mb-6">
       Fetching Data
     </div>
     <img :src="loadingImage" class="w-24 m-auto" alt="" />
@@ -43,6 +48,7 @@ import Cards from '../components/Cards';
 import CountrySelect from '../components/CountrySelect';
 import CountriesTable from '../components/CountriesTable';
 import GlobalLineChart from '../components/GlobalLineChart.vue';
+import GlobalMap from '../components/GlobalMap';
 import moment from 'moment';
 import numeral from 'numeral';
 
@@ -53,6 +59,7 @@ export default {
     CountrySelect,
     CountriesTable,
     GlobalLineChart,
+    GlobalMap
   },
   computed: {
     timestamp: function() {
@@ -67,9 +74,9 @@ export default {
       title: 'Global',
       countries: '',
       dataDate: '',
-      totalCases: '',
-      totalRecovered: '',
-      totalDeaths: '',
+      // totalCases: '',
+      // totalRecovered: '',
+      // totalDeaths: '',
       sortedData: '',
       chartOptions: {
         legend: {
@@ -126,7 +133,7 @@ export default {
       return data1;
     },
     async fetchGlobalCovidData(){
-      const res = await fetch('https://corona.lmao.ninja/v3/covid-19/historical/all?lastdays=90');
+      const res = await fetch('https://corona.lmao.ninja/v3/covid-19/historical/all?lastdays=120');
       const data2 = await res.json();
 
       return data2;
