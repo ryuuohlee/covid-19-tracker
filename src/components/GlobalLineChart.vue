@@ -18,7 +18,6 @@ export default defineComponent({
   mounted () {
     let previousDayData;
     let newCases = [];
-    const totals = Object.values(this.chartData.cases);
 
     //create data for newCases only
     for(let date in this.chartData.cases) {
@@ -33,6 +32,8 @@ export default defineComponent({
       labels: Object.keys(this.chartData.cases),
       datasets: [{
         label: this.label,
+        backgroundColor: "rgba(6, 95, 70, 0.5)",
+        borderColor: "rgba(6, 95, 70)",
         data: newCases
       }]
     },

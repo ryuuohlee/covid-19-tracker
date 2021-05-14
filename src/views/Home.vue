@@ -42,8 +42,9 @@
 import Cards from '../components/Cards';
 import CountrySelect from '../components/CountrySelect';
 import CountriesTable from '../components/CountriesTable';
-import moment from 'moment';
 import GlobalLineChart from '../components/GlobalLineChart.vue';
+import moment from 'moment';
+import numeral from 'numeral';
 
 export default {
   name: 'Home',
@@ -52,7 +53,6 @@ export default {
     CountrySelect,
     CountriesTable,
     GlobalLineChart,
-    //CountriesLineChart
   },
   computed: {
     timestamp: function() {
@@ -72,10 +72,51 @@ export default {
       totalDeaths: '',
       sortedData: '',
       chartOptions: {
+        legend: {
+          display: false,
+        },
+        elements: {
+          point: {
+            radius: 0,
+          }
+        },
+        scales: {
+           xAxes: [
+             {
+               type: 'time',
+               time: {
+                 format: 'MM/DD/YY',
+                 tooltipFormat: 'll'
+               }
+             }
+           ],
+          yAxes: [
+              {
+                gridLines: {
+                  display: true,
+                },
+                ticks: {
+                  // Include a dollar sign in the ticks
+                  callback: function (value, index, values) {
+                    return numeral(value).format("0a");
+                  },
+                },
+              },
+            ],
+        },
+        tooltips: {
+            mode:"index",
+            intersect: false,
+            callbacks: {
+              lable: function(tooltipItem, data) {
+                return numeral(tooltipItem.value).format("+0,0");
+              }
+            }
+        },
         responsive: true,
         maintainAspectRatio: false
       }
-    };
+    }
   },
   methods:{
     async fetchCovidData(){
@@ -89,12 +130,6 @@ export default {
       const data2 = await res.json();
 
       return data2;
-    },
-    async fetchGlobalCovid(){
-      const res = await fetch('https://api.covid19api.com/world/total');
-      const data3 = await res.json();
-
-      return data3;
     },
     getCountryData(country) {
       this.title = country;
@@ -124,10 +159,7 @@ export default {
       const data = await this.fetchCovidData();
       const data1 = await this.fetchCovidData();
       const data2 = await this.fetchGlobalCovidData();
-      const data3 = await this.fetchGlobalCovid();
       const reducer = (accum, curr) => accum + curr;
-
-      console.log(data3)
 
       this.data = data1;
       this.sortedData = data.sort((a,b) => b.cases-a.cases);
