@@ -1,6 +1,6 @@
 <template>
   <div>
-      <h3 class="text-xl font-bold mb-2">Live Infected Cases by Country</h3>
+      <h3 class="text-xl font-bold mb-2">Active Infected Cases by Country</h3>
       <div class="overflow-y-auto" style="height: 550px;">
         <table class="table-fixed">
           <tr>
@@ -13,7 +13,7 @@
             :key="country"
             :style="index%2===0 ? {'background-color': 'rgb(211,211,211)'} : {'background-color': 'white'}">
             <td>{{ country.country }} </td>
-            <td class="text-right font-bold">{{ numberWithCommas(country.cases) }} </td>
+            <td class="text-right font-bold">{{ numberWithCommas(country.active) }} </td>
           </tr>
         </table>
       </div>

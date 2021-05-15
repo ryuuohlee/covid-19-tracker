@@ -9,7 +9,7 @@
       <!-- info cards -->
       <Cards :infected="infected" :recovered="recovered" :deaths="deaths" />
       <!-- country select dropdown and button -->
-      <div class="flex">
+      <div class="flex w-full justify-end">
         <CountrySelect @get-country="getCountryData" :countries="countries" :title="title"/>
         <button
           @click="clearCountryData"
@@ -143,7 +143,7 @@ export default {
       let index = this.countries.indexOf(country);
 
       this.center= this.countryLoc[index].countryLoc;
-      this.infected = this.data[index].cases;
+      this.infected = this.data[index].active;
       this.recovered = this.data[index].recovered;
       this.deaths = this.data[index].deaths;
     },
@@ -156,7 +156,7 @@ export default {
       this.center = [47.41322, -1.219482];
       this.dataDate = data1[0].updated;
       this.countries = data1.map(countries => countries.country);
-      this.infected = data1.map(countries => countries.cases).reduce(reducer);
+      this.infected = data1.map(countries => countries.active).reduce(reducer);
       this.recovered = data1.map(countries => countries.recovered).reduce(reducer);
       this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
       this.loading = false;
@@ -170,7 +170,7 @@ export default {
       const reducer = (accum, curr) => accum + curr;
 
       this.data = data1;
-      this.sortedData = data.sort((a,b) => b.cases-a.cases);
+      this.sortedData = data.sort((a,b) => b.active-a.active);
       this.dataDate = data1[0].updated;
       this.countries = data1.map(countries => countries.country);
       this.countryLoc = data1.map(countries => new Object({
@@ -182,7 +182,7 @@ export default {
         radius: Math.sqrt(countries.active / (Math.PI * 200)),
         countryLoc: [countries.countryInfo.lat, countries.countryInfo.long]
       }));
-      this.infected = data1.map(countries => countries.cases).reduce(reducer);
+      this.infected = data1.map(countries => countries.active).reduce(reducer);
       this.recovered = data1.map(countries => countries.recovered).reduce(reducer);
       this.deaths = data1.map(countries => countries.deaths).reduce(reducer);
 
