@@ -20,13 +20,13 @@
           :fill="true"
           :fillOpacity="0.5"
           fillColor="rgba(6, 95, 70)"
-          :radius="Math.sqrt(countryLoc.active / (Math.PI * 200))"
+          :radius="Number(countryLoc.radius)"
         >
           <l-tooltip>
-            <p>Active: {{countryLoc.active}}</p>
-            <p>Infected: {{countryLoc.infected}}</p>
-            <p>Recovered: {{countryLoc.recovered}}</p>
-            <p>Deaths: {{countryLoc.deaths}}</p>
+            <p>Active: {{numberWithCommas(countryLoc.active)}}</p>
+            <p>Infected: {{numberWithCommas(countryLoc.infected)}}</p>
+            <p>Recovered: {{numberWithCommas(countryLoc.recovered)}}</p>
+            <p>Deaths: {{numberWithCommas(countryLoc.deaths)}}</p>
           </l-tooltip>
         </l-circle-marker>
 
@@ -50,11 +50,19 @@ export default {
     LTooltip
   },
   data() {
-    console.log(this.countryLoc)
     return {
       zoom: 3.5,
-      color: "rgba(6, 95, 70)",
+      color: "rgba(6, 95, 70)"
     }
   },
+  methods: {
+    numberWithCommas(x) {
+        x = x.toString();
+        var pattern = /(-?\d+)(\d{3})/;
+        while (pattern.test(x))
+            x = x.replace(pattern, "$1,$2");
+        return x;
+    }
+  }
 }
 </script>

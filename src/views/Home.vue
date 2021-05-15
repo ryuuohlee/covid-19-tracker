@@ -153,6 +153,7 @@ export default {
       const data1 = await this.fetchCovidData();
 
       this.title = 'Global';
+      this.center = [47.41322, -1.219482];
       this.dataDate = data1[0].updated;
       this.countries = data1.map(countries => countries.country);
       this.infected = data1.map(countries => countries.cases).reduce(reducer);
@@ -178,6 +179,7 @@ export default {
         active: countries.active,
         recovered: countries.recovered,
         deaths: countries.deaths,
+        radius: Math.sqrt(countries.active / (Math.PI * 200)),
         countryLoc: [countries.countryInfo.lat, countries.countryInfo.long]
       }));
       this.infected = data1.map(countries => countries.cases).reduce(reducer);
@@ -187,7 +189,6 @@ export default {
       this.data2 = data2;
 
       this.loading = false;
-      console.log(this.countries)
     }
 }
 </script>
