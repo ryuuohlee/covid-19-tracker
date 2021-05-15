@@ -174,6 +174,10 @@ export default {
       this.countries = data1.map(countries => countries.country);
       this.countryLoc = data1.map(countries => new Object({
         country: countries.country,
+        infected: countries.cases,
+        active: countries.active,
+        recovered: countries.recovered,
+        deaths: countries.deaths,
         countryLoc: [countries.countryInfo.lat, countries.countryInfo.long]
       }));
       this.infected = data1.map(countries => countries.cases).reduce(reducer);
@@ -183,6 +187,7 @@ export default {
       this.data2 = data2;
 
       this.loading = false;
+      console.log(this.countries)
     }
 }
 </script>
